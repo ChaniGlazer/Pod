@@ -1,6 +1,10 @@
 import express from "express";
 import { fetchPodcastEpisodes } from "./lib/rss.js";
 import { sendEpisodeEmail, sendSummaryEmail } from "./lib/mailer.js";
+import { Agent, setGlobalDispatcher } from 'undici';
+
+// הגדרת זמן ההמתנה ל-0 (ללא הגבלה) עבור גוף ההודעה והכותרות
+setGlobalDispatcher(new Agent({ bodyTimeout: 0, headersTimeout: 0 }));
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
